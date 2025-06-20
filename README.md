@@ -1,6 +1,6 @@
 # MedScanAI - Advanced Medical Image Classification
 
-![MedScanAI Banner]![image](https://github.com/user-attachments/assets/c62b48c1-91cc-4efa-946a-fa405e9189fd)
+[image](https://github.com/user-attachments/assets/c62b48c1-91cc-4efa-946a-fa405e9189fd)
 
 
 **AI-powered diagnostics for faster, more accurate medical image analysis.**  
@@ -114,5 +114,5 @@ Upload X-ray, CT, MRI scans, or skin images, and get quick and highly accurate r
 
 ---
 
-## Auther
+## Author
 https://github.com/ARIHARAN-KC
