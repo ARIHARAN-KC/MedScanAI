@@ -1,0 +1,335 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Information | MedScanAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .disease-section {
+            scroll-margin-top: 100px;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
+            min-width: 800px;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-lungs-virus text-2xl text-blue-600 mr-2"></i>
+                    <span class="text-xl font-bold text-blue-600">MedScanAI</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="{% url 'home' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-home mr-2"></i> Home
+                    </a>
+                    <a href="{% url 'about_us' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-users mr-2"></i> About Us
+                    </a>
+                    <a href="{% url 'info' %}" class="text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-info-circle mr-2"></i> Info
+                    </a>
+                    <a href="{% url 'detection' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-search mr-2"></i> Disease Detection
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-blue-600 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg absolute w-full">
+            <div class="px-4 py-4 space-y-4">
+                <a href="{% url 'home' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-home mr-2"></i> Home
+                </a>
+                <a href="{% url 'about_us' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-users mr-2"></i> About Us
+                </a>
+                <a href="{% url 'info' %}" class="block px-3 py-2 rounded-md text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-info-circle mr-2"></i> Info
+                </a>
+                <a href="{% url 'detection' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-search mr-2"></i> Disease Detection
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Page Header -->
+        <div class="mb-12 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Patient Information Dashboard</h1>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                Comprehensive view of all patient records and diagnostic results across different disease categories.
+            </p>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="mb-8 bg-white p-6 rounded-xl shadow-sm">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Quick Navigation</h2>
+            <div class="flex flex-wrap gap-3">
+                <a href="#chest-section" class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-full transition">
+                    <i class="fas fa-lungs mr-2"></i> Chest Diseases
+                </a>
+                <a href="#skin-section" class="bg-green-100 hover:bg-green-200 text-green-800 px-4 py-2 rounded-full transition">
+                    <i class="fas fa-allergies mr-2"></i> Skin Diseases
+                </a>
+                <a href="#brain-section" class="bg-purple-100 hover:bg-purple-200 text-purple-800 px-4 py-2 rounded-full transition">
+                    <i class="fas fa-brain mr-2"></i> Brain Diseases
+                </a>
+                <a href="#kidney-section" class="bg-red-100 hover:bg-red-200 text-red-800 px-4 py-2 rounded-full transition">
+                    <i class="fas fa-kidneys mr-2"></i> Kidney Diseases
+                </a>
+            </div>
+        </div>
+
+        <!-- Chest Disease Section -->
+        <section id="chest-section" class="disease-section mb-12 bg-white p-6 rounded-xl shadow-sm">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-semibold text-gray-800 flex items-center">
+                    <i class="fas fa-lungs text-blue-600 mr-3"></i> Chest Disease Data
+                </h2>
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                    {{ chest_disease_data|length }} records
+                </span>
+            </div>
+
+            <div class="table-container">
+                <table class="w-full border-collapse">
+                    <thead class="bg-blue-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-700 uppercase tracking-wider">Patient ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-700 uppercase tracking-wider">Patient Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-700 uppercase tracking-wider">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-blue-700 uppercase tracking-wider">Disease</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for item in chest_disease_data %}
+                        <tr class="hover:bg-blue-50 transition">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ item.p_id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.p_name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.p_email }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                    {{ item.p_disease }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">No chest disease records found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Skin Disease Section -->
+        <section id="skin-section" class="disease-section mb-12 bg-white p-6 rounded-xl shadow-sm">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-semibold text-gray-800 flex items-center">
+                    <i class="fas fa-allergies text-green-600 mr-3"></i> Skin Disease Data
+                </h2>
+                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                    {{ skin_disease_data|length }} records
+                </span>
+            </div>
+
+            <div class="table-container">
+                <table class="w-full border-collapse">
+                    <thead class="bg-green-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Patient ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Patient Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Disease</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for item in skin_disease_data %}
+                        <tr class="hover:bg-green-50 transition">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ item.p_id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.p_name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.p_email }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                    {{ item.p_disease }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">No skin disease records found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Brain Disease Section -->
+        <section id="brain-section" class="disease-section mb-12 bg-white p-6 rounded-xl shadow-sm">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-semibold text-gray-800 flex items-center">
+                    <i class="fas fa-brain text-purple-600 mr-3"></i> Brain Disease Data
+                </h2>
+                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
+                    {{ brain_tumor_data|length }} records
+                </span>
+            </div>
+
+            <div class="table-container">
+                <table class="w-full border-collapse">
+                    <thead class="bg-purple-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-purple-700 uppercase tracking-wider">Patient ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-purple-700 uppercase tracking-wider">Patient Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-purple-700 uppercase tracking-wider">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-purple-700 uppercase tracking-wider">Disease</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for item in brain_tumor_data %}
+                        <tr class="hover:bg-purple-50 transition">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ item.p_id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.p_name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.p_email }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">
+                                    {{ item.p_disease }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">No brain disease records found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Kidney Disease Section -->
+        <section id="kidney-section" class="disease-section mb-12 bg-white p-6 rounded-xl shadow-sm">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-semibold text-gray-800 flex items-center">
+                    <i class="fas fa-kidneys text-red-600 mr-3"></i> Kidney Disease Data
+                </h2>
+                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
+                    {{ kidney_disease_data|length }} records
+                </span>
+            </div>
+
+            <div class="table-container">
+                <table class="w-full border-collapse">
+                    <thead class="bg-red-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-red-700 uppercase tracking-wider">Patient ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-red-700 uppercase tracking-wider">Patient Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-red-700 uppercase tracking-wider">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-red-700 uppercase tracking-wider">Disease</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for item in kidney_disease_data %}
+                        <tr class="hover:bg-red-50 transition">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ item.p_id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.p_name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ item.p_email }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                                    {{ item.p_disease }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">No kidney disease records found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-lungs-virus text-2xl text-blue-400 mr-2"></i>
+                    <span class="text-xl font-bold text-blue-400">MedScanAI</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="{% url 'home' %}" class="text-gray-400 hover:text-white transition">Home</a>
+                    <a href="{% url 'about_us' %}" class="text-gray-400 hover:text-white transition">About Us</a>
+                    <a href="{% url 'info' %}" class="text-blue-400 hover:text-blue-300 transition">Info</a>
+                    <a href="{% url 'detection' %}" class="text-gray-400 hover:text-white transition">Disease Detection</a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-sm text-gray-400">
+                <p>&copy; 2025 MedScanAI. All rights reserved.</p>
+                <p class="mt-2">This tool is designed to assist healthcare professionals and should not replace professional medical advice.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobile-menu');
+            const button = document.getElementById('mobile-menu-button');
+            
+            if (!menu.contains(event.target) && !button.contains(event.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Ignore virtual environments
+env/
+venv/
+.venv/
+
+# Bytecode and build files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+build/
+dist/
+
+# Environment files
+*.env

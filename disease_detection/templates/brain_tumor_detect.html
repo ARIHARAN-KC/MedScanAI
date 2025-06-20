@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedScanAI - Brain Tumor Detection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .mobile-menu {
+            transition: all 0.3s ease;
+        }
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 2rem;
+            max-width: 32rem;
+            margin: 0 auto;
+        }
+        .form-container input,
+        .form-container button {
+            transition: all 0.3s ease;
+        }
+        .form-container input:focus {
+            outline: none;
+            ring: 2px solid #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .form-container button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800 bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-lungs-virus text-2xl text-blue-600 mr-2"></i>
+                    <span class="text-xl font-bold text-blue-600">MedScanAI</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="{% url 'home' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-home mr-2"></i> Home
+                    </a>
+                    <a href="{% url 'detection' %}" class="text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-search mr-2"></i> Disease Detection
+                    </a>
+                    <a href="{% url 'info' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-info-circle mr-2"></i> Disease Info
+                    </a>
+                    <a href="{% url 'about_us' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-users mr-2"></i> About Us
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-blue-600 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg absolute w-full">
+            <div class="px-4 py-4 space-y-4">
+                <a href="{% url 'home' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-home mr-2"></i> Home
+                </a>
+                <a href="{% url 'detection' %}" class="block px-3 py-2 rounded-md text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-search mr-2"></i> Disease Detection
+                </a>
+                <a href="{% url 'info' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-info-circle mr-2"></i> Disease Info
+                </a>
+                <a href="{% url 'about_us' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-users mr-2"></i> About Us
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="pt-28 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-center mb-12 text-blue-600 flex items-center justify-center">
+                <i class="fas fa-brain text-blue-600 mr-2"></i> Brain Tumor Detection
+            </h1>
+            
+            <div class="form-container">
+                <form method="post" enctype="multipart/form-data" class="space-y-6">
+                    {% csrf_token %}
+                    <div>
+                        <label for="{{ form.p_id.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">{{ form.p_id.label }}</label>
+                        {{ form.p_id }}
+                    </div>
+                    <div>
+                        <label for="{{ form.p_name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">{{ form.p_name.label }}</label>
+                        {{ form.p_name }}
+                    </div>
+                    <div>
+                        <label for="{{ form.p_email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">{{ form.p_email.label }}</label>
+                        {{ form.p_email }}
+                    </div>
+                    <div>
+                        <label for="{{ form.p_image.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">{{ form.p_image.label }}</label>
+                        {{ form.p_image }}
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-search mr-2"></i> Detect
+                    </button>
+                </form>
+                {% if result %}
+                    <div class="mt-6 p-4 bg-gray-100 rounded-lg">
+                        <p class="text-gray-800 font-medium">Result: <span class="font-bold">{{ result }}</span></p>
+                    </div>
+                {% endif %}
+                <a href="{% url 'detection' %}" class="block mt-4 text-center text-blue-600 hover:text-blue-700 font-medium transition duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Disease Detection
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <!-- About -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-lungs-virus text-2xl text-blue-400 mr-2"></i>
+                        <span class="text-xl font-bold text-blue-400">MedScanAI</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Advanced AI solutions for medical image analysis and diagnostics.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="{% url 'home' %}" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="{% url 'detection' %}" class="text-gray-400 hover:text-white transition duration-300">Disease Detection</a></li>
+                        <li><a href="{% url 'info' %}" class="text-gray-400 hover:text-white transition duration-300">Disease Information</a></li>
+                        <li><a href="{% url 'about_us' %}" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Contact Us</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-blue-400"></i>
+                            <span>123 Medical Drive, Health City</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-blue-400"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-blue-400"></i>
+                            <span>info@medscanai.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">
+                        Subscribe to our newsletter for the latest updates.
+                    </p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg focus:outline-none text-gray-900 w-full">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-lg">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                        © 2025 MedScanAI. All rights reserved.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition duration-300">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition duration-300">Terms of Service</a>
+                    </div>
+                </div>
+                <p class="text-gray-500 text-xs mt-6 text-center">
+                    Note: This tool is designed to assist healthcare professionals and should not replace professional medical advice, diagnosis, or treatment.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobile-menu');
+            const button = document.getElementById('mobile-menu-button');
+            if (!menu.contains(event.target) && !button.contains(event.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

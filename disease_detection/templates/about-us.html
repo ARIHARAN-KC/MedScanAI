@@ -1,0 +1,328 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedScanAI - About Us</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .carousel-item {
+            min-width: 100%;
+            position: relative;
+        }
+        .carousel-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            text-align: center;
+        }
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 1rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .carousel-control-prev {
+            left: 0;
+        }
+        .carousel-control-next {
+            right: 0;
+        }
+        .carousel-indicators {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .carousel-indicator.active {
+            background-color: #3b82f6;
+        }
+        .mobile-menu {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800 bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-lungs-virus text-2xl text-blue-600 mr-2"></i>
+                    <span class="text-xl font-bold text-blue-600">MedScanAI</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="{% url 'home' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-home mr-2"></i> Home
+                    </a>
+                    <a href="{% url 'detection' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-search mr-2"></i> Disease Detection
+                    </a>
+                    <a href="{% url 'info' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-info-circle mr-2"></i> Disease Info
+                    </a>
+                    <a href="{% url 'about_us' %}" class="text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-users mr-2"></i> About Us
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-blue-600 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg absolute w-full">
+            <div class="px-4 py-4 space-y-4">
+                <a href="{% url 'home' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-home mr-2"></i> Home
+                </a>
+                <a href="{% url 'detection' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-search mr-2"></i> Disease Detection
+                </a>
+                <a href="{% url 'info' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-info-circle mr-2"></i> Disease Info
+                </a>
+                <a href="{% url 'about_us' %}" class="block px-3 py-2 rounded-md text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-users mr-2"></i> About Us
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="pt-28 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-center mb-12 text-blue-600">About Us</h1>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-12 text-center">
+                We are a team of medical professionals and data scientists working together to create an advanced medical image classification system, leveraging AI to enhance diagnostic accuracy and efficiency.
+            </p>
+
+            <!-- Carousel -->
+            <div class="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'images/chest_a.jpg' %}" class="w-full h-[500px] object-cover" alt="Chest Disease Detection">
+                        <div class="carousel-caption">
+                            <h5 class="text-xl font-bold text-white">Chest Disease Detection</h5>
+                            <p class="text-white">Detect diseases like COVID-19, tuberculosis, and pneumonia using our advanced AI application.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/brain_a.jpg' %}" class="w-full h-[500px] object-cover" alt="Brain Tumor Detection">
+                        <div class="carousel-caption">
+                            <h5 class="text-xl font-bold text-white">Brain Tumor Detection</h5>
+                            <p class="text-white">Identify the presence of brain tumors with high precision using MRI scans.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/kidney_a.jpg' %}" class="w-full h-[500px] object-cover" alt="Kidney Disease Detection">
+                        <div class="carousel-caption">
+                            <h5 class="text-xl font-bold text-white">Kidney Disease Detection</h5>
+                            <p class="text-white">Detect kidney stones, cysts, tumors, or normal conditions with our AI-powered system.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'images/skin_a.jpg' %}" class="w-full h-[500px] object-cover" alt="Skin Disease Detection">
+                        <div class="carousel-caption">
+                            <h5 class="text-xl font-bold text-white">Skin Disease Detection</h5>
+                            <p class="text-white">Diagnose skin conditions accurately using our advanced image analysis technology.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-control carousel-control-prev">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="carousel-control carousel-control-next">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="carousel-indicators">
+                    <div class="carousel-indicator active"></div>
+                    <div class="carousel-indicator"></div>
+                    <div class="carousel-indicator"></div>
+                    <div class="carousel-indicator"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <!-- About -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-lungs-virus text-2xl text-blue-400 mr-2"></i>
+                        <span class="text-xl font-bold text-blue-400">MedScanAI</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Advanced AI solutions for medical image analysis and diagnostics.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="{% url 'home' %}" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="{% url 'detection' %}" class="text-gray-400 hover:text-white transition duration-300">Disease Detection</a></li>
+                        <li><a href="{% url 'info' %}" class="text-gray-400 hover:text-white transition duration-300">Disease Information</a></li>
+                        <li><a href="{% url 'about_us' %}" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Contact Us</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-blue-400"></i>
+                            <span>123 Medical Drive, Health City</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-blue-400"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-blue-400"></i>
+                            <span>info@medscanai.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">
+                        Subscribe to our newsletter for the latest updates.
+                    </p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg focus:outline-none text-gray-900 w-full">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-lg">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                        © 2025 MedScanAI. All rights reserved.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition duration-300">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition duration-300">Terms of Service</a>
+                    </div>
+                </div>
+                <p class="text-gray-500 text-xs mt-6 text-center">
+                    Note: This tool is designed to assist healthcare professionals and should not replace professional medical advice, diagnosis, or treatment.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobile-menu');
+            const button = document.getElementById('mobile-menu-button');
+            if (!menu.contains(event.target) && !button.contains(event.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+
+        // Carousel functionality
+        const carousel = document.querySelector('.carousel-inner');
+        const items = document.querySelectorAll('.carousel-item');
+        const prevButton = document.querySelector('.carousel-control-prev');
+        const nextButton = document.querySelector('.carousel-control-next');
+        const indicators = document.querySelectorAll('.carousel-indicator');
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex === 0) ? items.length - 1 : currentIndex - 1;
+            updateCarousel();
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex === items.length - 1) ? 0 : currentIndex + 1;
+            updateCarousel();
+        });
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                currentIndex = index;
+                updateCarousel();
+            });
+        });
+
+        // Auto-slide every 5 seconds
+        setInterval(() => {
+            currentIndex = (currentIndex === items.length - 1) ? 0 : currentIndex + 1;
+            updateCarousel();
+        }, 5000);
+    </script>
+</body>
+</html>

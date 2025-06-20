@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Detection | MedScanAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .disease-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-lungs-virus text-2xl text-blue-600 mr-2"></i>
+                    <span class="text-xl font-bold text-blue-600">MedScanAI</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="{% url 'home' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-home mr-2"></i> Home
+                    </a>
+                    <a href="{% url 'about_us' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-users mr-2"></i> About Us
+                    </a>
+                    <a href="{% url 'info' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-info-circle mr-2"></i> Info
+                    </a>
+                    <a href="{% url 'detection' %}" class="text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-search mr-2"></i> Disease Detection
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-blue-600 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg absolute w-full">
+            <div class="px-4 py-4 space-y-4">
+                <a href="{% url 'home' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-home mr-2"></i> Home
+                </a>
+                <a href="{% url 'about_us' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-users mr-2"></i> About Us
+                </a>
+                <a href="{% url 'info' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-info-circle mr-2"></i> Info
+                </a>
+                <a href="{% url 'detection' %}" class="block px-3 py-2 rounded-md text-blue-600 font-medium flex items-center">
+                    <i class="fas fa-search mr-2"></i> Disease Detection
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Page Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Medical Image Classification</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Select a disease category below to analyze medical images using our AI-powered diagnostic system.
+            </p>
+        </div>
+
+        <!-- Disease Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Brain Tumor Card -->
+            <a href="{% url 'brain_tumor_detect' %}" class="disease-card bg-white rounded-xl shadow-md p-6 text-center transition duration-300 hover:border-blue-500 border-2 border-transparent">
+                <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-brain text-blue-600 text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Brain Tumor Detection</h3>
+                <p class="text-gray-600 mb-4">
+                    Analyze MRI scans for tumor detection and classification
+                </p>
+                <span class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                    Get Started <i class="fas fa-arrow-right ml-1"></i>
+                </span>
+            </a>
+
+            <!-- Chest Disease Card -->
+            <a href="{% url 'chest_disease_detect' %}" class="disease-card bg-white rounded-xl shadow-md p-6 text-center transition duration-300 hover:border-green-500 border-2 border-transparent">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-lungs text-green-600 text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Chest Disease Detection</h3>
+                <p class="text-gray-600 mb-4">
+                    Detect pneumonia and other chest conditions from X-rays
+                </p>
+                <span class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                    Get Started <i class="fas fa-arrow-right ml-1"></i>
+                </span>
+            </a>
+
+            <!-- Kidney Disease Card -->
+            <a href="{% url 'kidney_disease_detect' %}" class="disease-card bg-white rounded-xl shadow-md p-6 text-center transition duration-300 hover:border-red-500 border-2 border-transparent">
+                <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-kidneys text-red-600 text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Kidney Disease Detection</h3>
+                <p class="text-gray-600 mb-4">
+                    Identify kidney conditions from medical imaging
+                </p>
+                <span class="inline-block bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
+                    Get Started <i class="fas fa-arrow-right ml-1"></i>
+                </span>
+            </a>
+
+            <!-- Skin Disease Card -->
+            <a href="{% url 'skin_disease_detect' %}" class="disease-card bg-white rounded-xl shadow-md p-6 text-center transition duration-300 hover:border-purple-500 border-2 border-transparent">
+                <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-allergies text-purple-600 text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Skin Disease Detection</h3>
+                <p class="text-gray-600 mb-4">
+                    Classify various skin conditions from images
+                </p>
+                <span class="inline-block bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
+                    Get Started <i class="fas fa-arrow-right ml-1"></i>
+                </span>
+            </a>
+        </div>
+
+        <!-- How It Works Section -->
+        <div class="mt-16 bg-white rounded-xl shadow-md p-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">How Our Detection System Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-upload text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">1. Upload Image</h3>
+                    <p class="text-gray-600">Select and upload your medical image for analysis</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-cogs text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">2. AI Processing</h3>
+                    <p class="text-gray-600">Our advanced algorithms analyze the image</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-file-medical text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">3. Get Results</h3>
+                    <p class="text-gray-600">Receive detailed diagnostic report</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-lungs-virus text-2xl text-blue-400 mr-2"></i>
+                    <span class="text-xl font-bold text-blue-400">MedScanAI</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="{% url 'home' %}" class="text-gray-400 hover:text-white transition">Home</a>
+                    <a href="{% url 'about_us' %}" class="text-gray-400 hover:text-white transition">About Us</a>
+                    <a href="{% url 'info' %}" class="text-gray-400 hover:text-white transition">Info</a>
+                    <a href="{% url 'detection' %}" class="text-blue-400 hover:text-blue-300 transition">Disease Detection</a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-sm text-gray-400">
+                <p>&copy; 2025 MedScanAI. All rights reserved.</p>
+                <p class="mt-2">This tool is designed to assist healthcare professionals and should not replace professional medical advice.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobile-menu');
+            const button = document.getElementById('mobile-menu-button');
+            
+            if (!menu.contains(event.target) && !button.contains(event.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
