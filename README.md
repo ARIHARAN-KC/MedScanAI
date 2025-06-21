@@ -116,4 +116,3 @@ Upload X-ray, CT, MRI scans, or skin images, and get quick and highly accurate r
 
 ## Author
 https://github.com/ARIHARAN-KC
-If u like the project, give star.
