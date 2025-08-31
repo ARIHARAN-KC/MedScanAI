@@ -2,7 +2,7 @@
 # Create your views here.
 from django.shortcuts import render
 from django.conf import settings
-import os
+import os, json, requests
 import cv2
 import numpy as np
 from .models import ChestDiseaseModel, BrainTumorModel, SkinDiseaseModel, KidneyDiseaseModel
@@ -10,6 +10,11 @@ from keras.models import load_model
 from .forms import ChestDiseaseForm,BrainTumorForm,SkinDiseaseForm,KidenyDiseaseForm
 from io import BytesIO
 from PIL import Image 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")  # store in .env for safety
 # from js import FileReader
 #loading all the models
 chest_model=load_model(os.path.join(settings.BASE_DIR, 'disease_detection/models/chest_model.h5'))
@@ -245,3 +250,52 @@ def kidney_disease_detect(request):
     
 
     return render(request, 'kidney_disease_detect.html', {'form': form})
+
+
+def chatbot_page(request):
+    return render(request, "chatbot.html") 
+
+@csrf_exempt
+def chatbot(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+        user_message = data.get("message", "")
+
+        # System prompt to restrict bot answers
+        system_prompt = (
+            "You are a knowledgeable and reliable medical assistant. "
+            "Answer questions strictly about medical and healthcare topics, including diseases, symptoms, treatments, "
+            "diagnosis, prevention, medications, anatomy, and healthcare advice. "
+            "If a user asks something non-medical (e.g., politics, sports, entertainment, coding), reply: "
+            "'I can only answer medical-related questions.'"
+        )
+
+        try:
+            response = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                    "Content-Type": "application/json",
+                },
+                json={
+                    "model": "meta-llama/llama-3.3-70b-instruct:free",  # model loaded from OpenRouter
+                    "messages": [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_message},
+                    ],
+                },
+                timeout=30,
+            )
+
+            if response.status_code == 200:
+                data = response.json()
+                bot_reply = data["choices"][0]["message"]["content"]
+            else:
+                bot_reply = "Sorry, I am unable to process your request at the moment."
+
+        except Exception as e:
+            bot_reply = f"Error: {str(e)}"
+
+        return JsonResponse({"response": bot_reply})
+
+    return JsonResponse({"error": "Invalid request"}, status=400)

@@ -10,4 +10,6 @@ urlpatterns = [
     path('brain-tumor/', views.brain_tumor_detect, name='brain_tumor_detect'),
     path('skin-disease/', views.skin_disease_detect, name='skin_disease_detect'),
     path('kidney-disease/', views.kidney_disease_detect, name='kidney_disease_detect'),
+    path('chatbot/', views.chatbot_page, name='chatbot_page'),
+    path('chatbot/api/', views.chatbot, name='chatbot_api'),
 ] 

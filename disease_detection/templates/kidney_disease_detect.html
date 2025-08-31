@@ -45,10 +45,10 @@
                 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-8">
-                    <a href="{% url 'home' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                    <a href="{% url 'home' %}" class="text-blue-600 font-medium flex items-center">
                         <i class="fas fa-home mr-2"></i> Home
                     </a>
-                    <a href="{% url 'detection' %}" class="text-blue-600 font-medium flex items-center">
+                    <a href="{% url 'detection' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
                         <i class="fas fa-search mr-2"></i> Disease Detection
                     </a>
                     <a href="{% url 'info' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
@@ -56,6 +56,9 @@
                     </a>
                     <a href="{% url 'about_us' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
                         <i class="fas fa-users mr-2"></i> About Us
+                    </a>
+                    <a href="{% url 'chatbot_page' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-users mr-2"></i> Chatbot
                     </a>
                 </div>
                 
@@ -71,18 +74,21 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg absolute w-full">
             <div class="px-4 py-4 space-y-4">
-                <a href="{% url 'home' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
-                    <i class="fas fa-home mr-2"></i> Home
-                </a>
-                <a href="{% url 'detection' %}" class="block px-3 py-2 rounded-md text-blue-600 font-medium flex items-center">
-                    <i class="fas fa-search mr-2"></i> Disease Detection
-                </a>
-                <a href="{% url 'info' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
-                    <i class="fas fa-info-circle mr-2"></i> Disease Info
-                </a>
-                <a href="{% url 'about_us' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
-                    <i class="fas fa-users mr-2"></i> About Us
-                </a>
+                    <a href="{% url 'home' %}" class="text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-home mr-2"></i> Home
+                    </a>
+                    <a href="{% url 'detection' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-search mr-2"></i> Disease Detection
+                    </a>
+                    <a href="{% url 'info' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-info-circle mr-2"></i> Disease Info
+                    </a>
+                    <a href="{% url 'about_us' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-users mr-2"></i> About Us
+                    </a>
+                    <a href="{% url 'chatbot_page' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-users mr-2"></i> Chatbot
+                    </a>
             </div>
         </div>
     </nav>

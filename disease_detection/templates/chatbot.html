@@ -42,6 +42,53 @@
         .mobile-menu {
             transition: all 0.3s ease;
         }
+        .typing-dots {
+            display: inline-flex;
+            align-items: center;
+            height: 17px;
+        }
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #6b7280;
+            margin: 0 1px;
+            display: inline-block;
+            animation: typing-dots 1.4s infinite ease-in-out both;
+        }
+        .typing-dots span:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+        .typing-dots span:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+        @keyframes typing-dots {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        #messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        #messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        #messages::-webkit-scrollbar-thumb {
+            background: #c5c5c5;
+            border-radius: 10px;
+        }
+        #messages::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        .message {
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
 <body class="font-sans antialiased text-gray-800 bg-gray-50">
@@ -85,22 +132,21 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg absolute w-full">
             <div class="px-4 py-4 space-y-4">
-                <a href="{% url 'home' %}" class="block px-3 py-2 rounded-md text-blue-600 font-medium flex items-center">
-                    <i class="fas fa-home mr-2"></i> Home
-                </a>
-                <a href="{% url 'detection' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
-                    <i class="fas fa-search mr-2"></i> Disease Detection
-                </a>
-                <a href="{% url 'info' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
-                    <i class="fas fa-info-circle mr-2"></i> Disease Info
-                </a>
-                <a href="{% url 'about_us' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
-                    <i class="fas fa-users mr-2"></i> About Us
-                </a>
-                <a href="{% url 'chatbot_page' %}" class="block px-3 py-2 rounded-md text-gray-600 hover:text-blue-600 font-medium flex items-center">
-                    <i class="fas fa-robot mr-2"></i> Chatbot
-                </a>
-
+                    <a href="{% url 'home' %}" class="text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-home mr-2"></i> Home
+                    </a>
+                    <a href="{% url 'detection' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-search mr-2"></i> Disease Detection
+                    </a>
+                    <a href="{% url 'info' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-info-circle mr-2"></i> Disease Info
+                    </a>
+                    <a href="{% url 'about_us' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-users mr-2"></i> About Us
+                    </a>
+                    <a href="{% url 'chatbot_page' %}" class="text-gray-600 hover:text-blue-600 font-medium flex items-center">
+                        <i class="fas fa-users mr-2"></i> Chatbot
+                    </a>
             </div>
         </div>
     </nav>
@@ -222,145 +268,105 @@
         </div>
     </section>
 
- <!-- Supported Conditions Section -->
-<section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-16">Supported Conditions</h2>
-        
-        <!-- Horizontal scrollable container -->
-        <div class="relative overflow-hidden">
-            <div id="scrolling-container" class="flex pb-6">
-                <div id="scrolling-content" class="flex space-x-8 flex-nowrap">
-                    <!-- Condition 1 -->
-                    <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
-                        <img src="{% static 'images/chest_a.png' %}" alt="Pneumonia" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-3">Pneumonia</h3>
-                            <p class="text-gray-600">
-                                Detection of lung infections from chest X-rays with high precision.
-                            </p>
+    <!-- Supported Conditions Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-16">Supported Conditions</h2>
+            
+            <!-- Horizontal scrollable container -->
+            <div class="relative overflow-hidden">
+                <div id="scrolling-container" class="flex pb-6">
+                    <div id="scrolling-content" class="flex space-x-8 flex-nowrap">
+                        <!-- Condition 1 -->
+                        <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
+                            <img src="{% static 'images/chest_a.png' %}" alt="Pneumonia" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-3">Pneumonia</h3>
+                                <p class="text-gray-600">
+                                    Detection of lung infections from chest X-rays with high precision.
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- Condition 2 -->
-                    <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
-                        <img src="{% static 'images/brain_a.jpeg' %}" alt="Brain Tumor" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-3">Brain Tumors</h3>
-                            <p class="text-gray-600">
-                                Identification of abnormal growths in MRI scans of the brain.
-                            </p>
+                        
+                        <!-- Condition 2 -->
+                        <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
+                            <img src="{% static 'images/brain_a.jpeg' %}" alt="Brain Tumor" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-3">Brain Tumors</h3>
+                                <p class="text-gray-600">
+                                    Identification of abnormal growths in MRI scans of the brain.
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- Condition 3 -->
-                    <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
-                        <img src="{% static 'images/kideny_a.jpg' %}" alt="Fracture" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-3">kidney</h3>
-                            <p class="text-gray-600">
-                                Detection of kidney diseases.
-                            </p>
+                        
+                        <!-- Condition 3 -->
+                        <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
+                            <img src="{% static 'images/kideny_a.jpg' %}" alt="Fracture" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-3">kidney</h3>
+                                <p class="text-gray-600">
+                                    Detection of kidney diseases.
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- Condition 4 -->
-                    <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
-                        <img src="{% static 'images/skin_a.jpg' %}" alt="Fracture" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-3">Skin</h3>
-                            <p class="text-gray-600">
-                                Detection of Skin diseases.
-                            </p>
+                        
+                        <!-- Condition 4 -->
+                        <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
+                            <img src="{% static 'images/skin_a.jpg' %}" alt="Fracture" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-3">Skin</h3>
+                                <p class="text-gray-600">
+                                    Detection of Skin diseases.
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- Duplicate items for seamless looping -->
-                    <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
-                        <img src="{% static 'images/chest_a.png' %}" alt="Pneumonia" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-3">Pneumonia</h3>
-                            <p class="text-gray-600">
-                                Detection of lung infections from chest X-rays with high precision.
-                            </p>
+                        
+                        <!-- Duplicate items for seamless looping -->
+                        <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
+                            <img src="{% static 'images/chest_a.png' %}" alt="Pneumonia" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-3">Pneumonia</h3>
+                                <p class="text-gray-600">
+                                    Detection of lung infections from chest X-rays with high precision.
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
-                        <img src="{% static 'images/brain_a.jpeg' %}" alt="Brain Tumor" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-3">Brain Tumors</h3>
-                            <p class="text-gray-600">
-                                Identification of abnormal growths in MRI scans of the brain.
-                            </p>
+                        
+                        <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
+                            <img src="{% static 'images/brain_a.jpeg' %}" alt="Brain Tumor" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-3">Brain Tumors</h3>
+                                <p class="text-gray-600">
+                                    Identification of abnormal growths in MRI scans of the brain.
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
-                        <img src="{% static 'images/kideny_a.jpg' %}" alt="Fracture" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-3">kidney</h3>
-                            <p class="text-gray-600">
-                                Detection of kidney diseases.
-                            </p>
+                        
+                        <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
+                            <img src="{% static 'images/kideny_a.jpg' %}" alt="Fracture" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-3">kidney</h3>
+                                <p class="text-gray-600">
+                                    Detection of kidney diseases.
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
-                        <img src="{% static 'images/skin_a.jpg' %}" alt="Fracture" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-3">Skin</h3>
-                            <p class="text-gray-600">
-                                Detection of Skin diseases.
-                            </p>
+                        
+                        <div class="condition-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 flex-shrink-0 w-80">
+                            <img src="{% static 'images/skin_a.jpg' %}" alt="Fracture" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-3">Skin</h3>
+                                <p class="text-gray-600">
+                                    Detection of Skin diseases.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<script>
-    // Auto-scrolling for conditions
-    document.addEventListener('DOMContentLoaded', function() {
-        const scrollingContainer = document.getElementById('scrolling-container');
-        const scrollingContent = document.getElementById('scrolling-content');
-        const cards = document.querySelectorAll('.condition-card');
-        const cardWidth = cards[0].offsetWidth + 32; // width + margin
-        
-        // Clone the first set of cards and append to end for seamless looping
-        const originalContent = scrollingContent.innerHTML;
-        scrollingContent.innerHTML += originalContent;
-        
-        let scrollPosition = 0;
-        const scrollSpeed = 1; // pixels per frame (adjust for speed)
-        
-        function scrollCards() {
-            scrollPosition += scrollSpeed;
-            
-            // When we've scrolled all original cards, reset to start
-            if (scrollPosition >= cardWidth * (cards.length / 2)) {
-                scrollPosition = 0;
-            }
-            
-            scrollingContent.style.transform = `translateX(-${scrollPosition}px)`;
-            requestAnimationFrame(scrollCards);
-        }
-        
-        // Start scrolling
-        scrollCards();
-        
-        // Pause on hover
-        scrollingContainer.addEventListener('mouseenter', () => {
-            scrollSpeed = 0;
-        });
-        
-        scrollingContainer.addEventListener('mouseleave', () => {
-            scrollSpeed = 1;
-        });
-    });
-</script>
     <!-- Testimonials Section -->
     <section class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -491,22 +497,142 @@
         </div>
     </footer>
 
-    <script>
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        });
+    <!-- Chatbox -->
+    <div id="chatbox" class="fixed bottom-6 right-6 w-80 bg-white rounded-2xl shadow-xl border border-gray-200 flex flex-col overflow-hidden transition-all duration-300 z-40">
+        <!-- Chat Header -->
+        <div class="bg-blue-600 text-white px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center">
+                <i class="fas fa-robot mr-2"></i>
+                <span class="font-semibold">MedScanAI Assistant</span>
+            </div>
+            <button id="minimize-chat" class="text-white hover:text-blue-200 transition-colors">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
         
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const menu = document.getElementById('mobile-menu');
-            const button = document.getElementById('mobile-menu-button');
-            
-            if (!menu.contains(event.target) && !button.contains(event.target)) {
-                menu.classList.add('hidden');
+        <!-- Messages Area -->
+        <div id="messages" class="h-64 overflow-y-auto p-4 space-y-3 bg-gray-50 flex flex-col">
+            <!-- Messages will be added here -->
+        </div>
+
+        <!-- Input Area -->
+        <div class="flex items-center border-t border-gray-200 p-3 bg-white">
+            <input 
+                type="text" 
+                id="userInput" 
+                placeholder="Ask about diseases..." 
+                class="flex-grow px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 text-sm shadow-sm"
+                onkeypress="if(event.key === 'Enter') sendMessage()"
+            >
+            <button 
+                onclick="sendMessage()" 
+                class="ml-2 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-md transition duration-300"
+            >
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Chat Toggle Button (shown when minimized) -->
+    <button id="chat-toggle" class="fixed bottom-6 right-6 hidden w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-40">
+        <i class="fas fa-comment-medical text-xl"></i>
+    </button>
+
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add welcome message when the page loads
+        setTimeout(function() {
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML += `
+            <div class="flex justify-start message">
+                <div class="bg-gray-100 text-gray-800 px-3 py-2 rounded-lg max-w-[80%] shadow-md whitespace-pre-line">
+                    Hello! I'm MedScanAI Assistant. How can I help you with medical information today?
+                </div>
+            </div>
+            `;
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }, 1000);
+    });
+
+    async function sendMessage() {
+        let input = document.getElementById("userInput");
+        let message = input.value.trim();
+        if (!message) return;
+
+        let messagesDiv = document.getElementById("messages");
+
+        // Append user message (right aligned)
+        messagesDiv.innerHTML += `
+            <div class="flex justify-end message">
+                <div class="bg-blue-600 text-white px-3 py-2 rounded-lg max-w-[80%] shadow-md whitespace-pre-line">
+                    ${message}
+                </div>
+            </div>
+        `;
+
+        // Clear input
+        input.value = "";
+
+        // Show typing indicator (left aligned)
+        messagesDiv.innerHTML += `
+            <div class="flex justify-start message">
+                <div class="bg-gray-200 text-gray-600 px-3 py-2 rounded-lg shadow-md flex items-center">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Auto-scroll to bottom
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+        try {
+            // Fetch response
+            let response = await fetch("/chatbot/api/", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({"message": message})
+            });
+            let data = await response.json();
+
+            // Remove typing indicator
+            const typingIndicators = messagesDiv.querySelectorAll('.typing-dots');
+            if (typingIndicators.length > 0) {
+                typingIndicators[typingIndicators.length - 1].parentElement.parentElement.remove();
             }
-        });
-    </script>
+
+            // Append bot message (left aligned) with line breaks preserved
+            messagesDiv.innerHTML += `
+            <div class="flex justify-start message">
+                <div class="bg-gray-100 text-gray-800 px-3 py-2 rounded-lg max-w-[80%] shadow-md whitespace-pre-line">
+                    ${data.response}
+                </div>
+            </div>
+            `;
+        } catch (error) {
+            // Remove typing indicator
+            const typingIndicators = messagesDiv.querySelectorAll('.typing-dots');
+            if (typingIndicators.length > 0) {
+                typingIndicators[typingIndicators.length - 1].parentElement.parentElement.remove();
+            }
+            
+            // Show error message (left aligned)
+            messagesDiv.innerHTML += `
+            <div class="flex justify-start message">
+                <div class="bg-red-100 text-red-800 px-3 py-2 rounded-lg max-w-[80%] shadow-md">
+                    Sorry, I'm having trouble connecting right now. Please try again later.
+                </div>
+            </div>
+            `;
+        }
+
+        // Auto-scroll to bottom
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+</script>
+
 </body>
 </html>
