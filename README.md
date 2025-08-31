@@ -1,6 +1,6 @@
 # MedScanAI - Advanced Medical Image Classification
 
-![image](https://github.com/user-attachments/assets/c62b48c1-91cc-4efa-946a-fa405e9189fd)
+![image](https://github.com/user-attachments/assets/b1e44224-86a8-47f9-b985-7b6f2d0772bd)
 
 
 **AI-powered diagnostics for faster, more accurate medical image analysis.**  
